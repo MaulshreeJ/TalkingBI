@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -11,10 +12,13 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@tailwindcss/postcss": "^4.2.2",
     "@types/uuid": "^10.0.0",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^1.7.0",
     "next-themes": "^0.4.6",
     "plotly.js-dist-min": "^3.5.0",
@@ -28,8 +32,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "uuid": "^13.0.0",
-    "zustand": "^5.0.12",
-    "axios": "^1.6.8"
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@types/node": "^20",
