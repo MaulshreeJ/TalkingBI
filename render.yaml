@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: talkingbi-backend
+    env: python
+    region: oregon
+    buildCommand: "pip install -r talking_bi/requirements.txt"
+    startCommand: "cd talking_bi && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
