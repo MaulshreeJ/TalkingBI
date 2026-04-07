@@ -16,7 +16,7 @@ import pandas as pd
 
 from .df_registry import get_df
 from .state import PipelineState
-from services.chart_renderer import ChartRenderer
+
 
 
 # ─────────────────────────────────────────────────────────────
@@ -727,7 +727,7 @@ def insight_node(state: PipelineState) -> dict:
 # Now generates base64-encoded PNG images, not just metadata.
 # ─────────────────────────────────────────────────────────────
 
-renderer = ChartRenderer()
+
 
 
 def _looks_temporal_key(values):
