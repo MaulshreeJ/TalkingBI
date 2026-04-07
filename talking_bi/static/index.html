@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talking BI</title>
+    
+    <!-- Plotly.js for charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            background: #4a4a6a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #6a6a8a;
+        }
+        
+        .btn-primary {
+            background: #4a90d9;
+        }
+        
+        .btn-primary:hover {
+            background: #3a80c9;
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        /* Chart Area */
+        .chart-container {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: white;
+        }
+        
+        .chart-wrapper {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+        
+        .chart-div {
+            width: 100%;
+            height: 400px;
+        }
+        
+        /* Insights Panel */
+        .insights-panel {
+            width: 350px;
+            background: white;
+            border-left: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .insights-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+        
+        .insight-card {
+            background: #f8f9fa;
+            border-left: 4px solid #4a90d9;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        
+        .insight-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #4a90d9;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .insight-text {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* Trace Panel */
+        .trace-panel {
+            background: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .trace-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        .trace-block {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+            font-size: 0.75rem;
+            color: #ccc;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .input-area {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 24px;
+            padding: 0.5rem 1rem;
+        }
+        
+        .input-prompt {
+            color: #666;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .query-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+            padding: 0.5rem;
+        }
+        
+        .query-input::placeholder {
+            color: #999;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #f0f0f0;
+            padding: 0.5rem 2rem;
+            font-size: 0.875rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+        }
+        
+        .status-dot.processing {
+            background: #ff9800;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Upload overlay */
+        .upload-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .upload-dialog {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .upload-dialog h2 {
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+        
+        .upload-dialog p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        
+        .file-input-wrapper {
+            margin-bottom: 1rem;
+        }
+
+        .mode-select {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.625rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #fff;
+            color: #222;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: block;
+            padding: 2rem;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        .file-label:hover {
+            border-color: #4a90d9;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Upload Overlay (shown initially) -->
+    <div id="uploadOverlay" class="upload-overlay">
+        <div class="upload-dialog">
+            <h2>📊 Talking BI</h2>
+            <p>Upload a CSV file to start analyzing your data.</p>
+            <div class="file-input-wrapper">
+                <input type="file" id="fileInput" class="file-input" accept=".csv">
+                <label for="fileInput" class="file-label">
+                    Click to select CSV file<br>
+                    <small>or drag and drop here</small>
+                </label>
+            </div>
+            <select id="modeSelect" class="mode-select">
+                <option value="both">Mode: Both (Dashboard + Query)</option>
+                <option value="dashboard">Mode: Dashboard Only</option>
+                <option value="query">Mode: Query Only</option>
+            </select>
+            <button id="uploadBtn" class="btn btn-primary" style="width: 100%;">
+                Upload Dataset
+            </button>
+        </div>
+    </div>
+
+    <!-- Main App (hidden initially) -->
+    <div id="mainApp" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <h1>Talking BI</h1>
+            <div class="header-controls">
+                <span id="sessionId" style="font-size: 0.875rem; color: #aaa;"></span>
+                <button id="resetBtn" class="btn">Reset Session</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Chart Area -->
+            <div class="chart-container">
+                <div id="chartsArea">
+                    <div style="text-align: center; padding: 4rem; color: #999;">
+                        <p>Ask a question about your data to see visualizations here.</p>
+                        <p style="font-size: 0.875rem; margin-top: 1rem;">
+                            Try: "show revenue", "by region", "compare with quantity"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights Panel -->
+            <div class="insights-panel">
+                <h3 class="insights-title">💡 Insights</h3>
+                <div id="insightsArea">
+                    <p style="color: #999; font-size: 0.875rem;">
+                        Insights will appear here after you ask a question.
+                    </p>
+                </div>
+
+                <!-- Trace Panel (CRITICAL) -->
+                <div class="trace-panel">
+                    <h3 class="trace-title">🔍 Execution Trace</h3>
+                    <div id="traceArea">
+                        <p style="color: #999; font-size: 0.875rem;">
+                            Trace data will appear here.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-wrapper">
+                <span class="input-prompt">&gt;</span>
+                <input 
+                    type="text" 
+                    id="queryInput" 
+                    class="query-input" 
+                    placeholder="Ask a question about your data..."
+                    autocomplete="off"
+                >
+            </div>
+            <button id="sendBtn" class="btn btn-primary">Send</button>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-indicator">
+                <span id="statusDot" class="status-dot"></span>
+                <span id="statusText">Ready</span>
+            </div>
+            <div>
+                <span id="latencyDisplay"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let sessionId = null;
+        let isProcessing = false;
+
+        // DOM Elements
+        const uploadOverlay = document.getElementById('uploadOverlay');
+        const mainApp = document.getElementById('mainApp');
+        const fileInput = document.getElementById('fileInput');
+        const modeSelect = document.getElementById('modeSelect');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const queryInput = document.getElementById('queryInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const sessionIdDisplay = document.getElementById('sessionId');
+        const chartsArea = document.getElementById('chartsArea');
+        const insightsArea = document.getElementById('insightsArea');
+        const traceArea = document.getElementById('traceArea');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const latencyDisplay = document.getElementById('latencyDisplay');
+
+        // File Selection Feedback
+        fileInput.addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name;
+            const label = document.querySelector('.file-label');
+            if (fileName) {
+                label.innerHTML = `<strong>Selected: ${fileName}</strong><br><small>Ready to upload</small>`;
+                label.style.borderColor = '#4caf50';
+                label.style.background = '#e8f5e9';
+            } else {
+                label.innerHTML = `Click to select CSV file<br><small>or drag and drop here</small>`;
+                label.style.borderColor = '#ccc';
+                label.style.background = 'transparent';
+            }
+        });
+
+        // Upload Dataset
+        uploadBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a CSV file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                uploadBtn.textContent = 'Uploading...';
+                uploadBtn.disabled = true;
+
+                const selectedMode = (modeSelect?.value || 'both').toLowerCase();
+                const response = await fetch(`/upload?mode=${encodeURIComponent(selectedMode)}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    let errText = 'Upload failed';
+                    try {
+                        const errObj = await response.json();
+                        errText = errObj.detail || JSON.stringify(errObj);
+                    } catch (e) {
+                        errText = await response.text() || response.statusText;
+                    }
+                    throw new Error(`[${response.status}] ${errText}`);
+                }
+
+                const data = await response.json();
+                sessionId = data.dataset_id || data.session_id;
+                
+                if (!sessionId) {
+                    throw new Error("No session ID returned from server.");
+                }
+                
+                sessionIdDisplay.textContent = `Session: ${sessionId.slice(0, 8)}...`;
+
+                // Show main app
+                uploadOverlay.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+
+                renderUploadArtifacts(data);
+
+                if (selectedMode === 'dashboard') {
+                    queryInput.disabled = true;
+                    sendBtn.disabled = true;
+                    queryInput.placeholder = 'Dashboard-only session. Re-upload in query/both mode to ask questions.';
+                }
+
+            } catch (error) {
+                console.error("Upload error trace:", error);
+                alert('Upload failed: ' + error.message);
+                uploadBtn.textContent = 'Upload Dataset';
+                uploadBtn.disabled = false;
+            }
+        });
+
+        // Send Query
+        async function sendQuery() {
+            const query = queryInput.value.trim();
+            if (!query || isProcessing) return;
+
+            isProcessing = true;
+            updateStatus('Processing...', true);
+            sendBtn.disabled = true;
+
+            try {
+                const startTime = performance.now();
+
+                const response = await fetch(`/query/${sessionId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const result = await response.json();
+                const endTime = performance.now();
+
+                displayResults(result);
+                updateStatus('Ready', false);
+                latencyDisplay.textContent = `Latency: ${result.latency_ms?.toFixed(1) || (endTime - startTime).toFixed(0)}ms`;
+
+                queryInput.value = '';
+
+            } catch (error) {
+                updateStatus('Error', false);
+                alert('Query failed: ' + error.message);
+            } finally {
+                isProcessing = false;
+                sendBtn.disabled = false;
+            }
+        }
+
+        sendBtn.addEventListener('click', sendQuery);
+        queryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendQuery();
+        });
+
+        // Reset Session
+        resetBtn.addEventListener('click', async () => {
+            if (!sessionId) return;
+
+            try {
+                const response = await fetch(`/session/${sessionId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Reset failed:', error);
+            }
+        });
+
+        // Display Results
+        function displayResults(result) {
+            // Clear previous results
+            chartsArea.innerHTML = '';
+            insightsArea.innerHTML = '';
+            traceArea.innerHTML = '';
+
+            // Render Trace (Always update trace regardless of status to help debugging)
+            if (result.trace) {
+                const traceMap = result.trace.mapped_fields || {};
+                const kpiSource = traceMap.kpi || 'Unknown';
+                
+                const traceObj = {
+                    intent: result.intent?.intent || 'UNKNOWN',
+                    kpi: result.intent?.kpi || null,
+                    dimension: result.intent?.dimension || null,
+                    filters: result.intent?.filter || null,
+                    kpi_source: kpiSource,
+                    execution_plan: result.plan?.operations || result.trace?.execution_path || [],
+                    backend: result.trace?.backend_used || 'N/A'
+                };
+                
+                traceArea.innerHTML = `
+                    <div class="trace-block">${JSON.stringify(traceObj, null, 2)}</div>
+                `;
+            } else {
+                traceArea.innerHTML = '<p style="color: #999;">No trace available.</p>';
+            }
+
+            // Show status if not resolved
+            if (result.status !== 'RESOLVED') {
+                const statusColor = result.status === 'AMBIGUOUS' ? '#e3f2fd' : '#fff3e0';
+                const borderColor = result.status === 'AMBIGUOUS' ? '#bbdefb' : '#ffe0b2';
+                
+                chartsArea.innerHTML = `
+                    <div style="padding: 2rem; background: ${statusColor}; border: 1px solid ${borderColor}; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 0.5rem; color: #333;">${result.status}</h3>
+                        <p style="color: #666;">${result.errors?.[0] || result.warnings?.[0] || 'I need more information to complete this query.'}</p>
+                    </div>
+                `;
+                
+                // Case 1: INCOMPLETE (Suggestions)
+                if (result.status === 'INCOMPLETE' && result.suggestions && result.suggestions.length > 0) {
+                    const panel = document.createElement('div');
+                    panel.className = 'clarification-panel';
+                    panel.innerHTML = `
+                        <div class="clarification-title">💡 Suggested queries</div>
+                        <div class="suggestion-group"></div>
+                    `;
+                    const group = panel.querySelector('.suggestion-group');
+                    result.suggestions.forEach(s => {
+                        const btn = document.createElement('button');
+                        btn.className = 'suggestion-btn';
+                        btn.innerText = s;
+                        btn.onclick = () => {
+                            queryInput.value = s;
+                            sendQuery();
+                        };
+                        group.appendChild(btn);
+                    });
+                    chartsArea.appendChild(panel);
+                }
+
+                // Case 2: AMBIGUOUS (Candidates)
+                if (result.status === 'AMBIGUOUS' && result.candidates && result.candidates.length > 0) {
+                    const panel = document.createElement('div');
+                    panel.className = 'clarification-panel';
+                    const originalQuery = queryInput.value || result.query;
+                    panel.innerHTML = `
+                        <div class="clarification-title">🔍 Did you mean?</div>
+                        <div class="suggestion-group"></div>
+                    `;
+                    const group = panel.querySelector('.suggestion-group');
+                    result.candidates.forEach(c => {
+                        const btn = document.createElement('button');
+                        btn.className = 'suggestion-btn';
+                        btn.innerText = c;
+                        btn.onclick = () => {
+                            const refined = originalQuery.replace(/(amount|value|metric|total|kpi|metric)/i, c);
+                            queryInput.value = refined;
+                            sendQuery();
+                        };
+                        group.appendChild(btn);
+                    });
+                    chartsArea.appendChild(panel);
+                }
+            }
+
+            // Display Charts
+            if (result.charts && result.charts.length > 0) {
+                result.charts.forEach((chart, index) => {
+                    const chartDiv = document.createElement('div');
+                    chartDiv.className = 'chart-wrapper';
+                    const title = chart.kpi || 'Chart';
+                    chartDiv.innerHTML = `<div class="chart-title">${title}</div>`;
+                    chartsArea.appendChild(chartDiv);
+
+                    // Render backend-generated image charts first.
+                    if (chart.image) {
+                        const img = document.createElement('img');
+                        img.src = `data:image/png;base64,${chart.image}`;
+                        img.alt = title;
+                        img.style.width = '100%';
+                        img.style.height = 'auto';
+                        img.style.borderRadius = '6px';
+                        chartDiv.appendChild(img);
+                    } else if (chart.spec) {
+                        // Fallback: Render Plotly specs if provided.
+                        const plotDiv = document.createElement('div');
+                        plotDiv.id = `chart-${index}`;
+                        plotDiv.className = 'chart-div';
+                        chartDiv.appendChild(plotDiv);
+                        Plotly.newPlot(plotDiv.id, chart.spec.data, chart.spec.layout, {responsive: true});
+                    } else if (chart.type === 'metric') {
+                        const metric = document.createElement('div');
+                        metric.style.fontSize = '1.8rem';
+                        metric.style.fontWeight = '700';
+                        metric.style.color = '#1a1a2e';
+                        metric.textContent = String(chart.value ?? '');
+                        chartDiv.appendChild(metric);
+                    }
+                });
+            }
+
+            // Display Data Table (if timeseries)
+            if (result.data && result.data.length > 0) {
+                const tableDiv = document.createElement('div');
+                tableDiv.className = 'chart-wrapper';
+                
+                const firstItem = result.data[0];
+                if (firstItem.data) {
+                    // Create simple table preview
+                    const previewData = firstItem.data.slice(0, 10);
+                    const columns = Object.keys(previewData[0] || {});
+                    
+                    tableDiv.innerHTML = `
+                        <div class="chart-title">${firstItem.kpi} - Data Preview</div>
+                        <table style="width: 100%; font-size: 0.875rem; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f5f5f5;">
+                                    ${columns.map(col => `<th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #ddd;">${col}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${previewData.map(row => `
+                                    <tr>
+                                        ${columns.map(col => `<td style="padding: 0.5rem; border-bottom: 1px solid #eee;">${row[col]}</td>`).join('')}
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                    chartsArea.appendChild(tableDiv);
+                }
+            }
+
+            // Display Insights
+            if (result.insights && result.insights.length > 0) {
+                result.insights.slice(0, 5).forEach(insight => {
+                    const card = document.createElement('div');
+                    card.className = 'insight-card';
+                    card.innerHTML = `
+                        <div class="insight-type">${insight.type || 'INSIGHT'}</div>
+                        <div class="insight-text">${insight.summary || insight.text || JSON.stringify(insight)}</div>
+                    `;
+                    insightsArea.appendChild(card);
+                });
+            } else {
+                insightsArea.innerHTML = '<p style="color: #999;">No insights generated for this query.</p>';
+            }
+        }
+
+        function renderUploadArtifacts(uploadData) {
+            chartsArea.innerHTML = '';
+            insightsArea.innerHTML = '';
+            traceArea.innerHTML = '';
+
+            const dashboard = uploadData?.dashboard || {};
+            const charts = dashboard?.charts || [];
+            const kpis = dashboard?.kpis || [];
+            const insights = dashboard?.insights || [];
+            const suggestions = uploadData?.suggestions || [];
+            const summaryText = uploadData?.dataset_summary_text || '';
+
+            if (summaryText) {
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'chart-wrapper';
+                summaryDiv.innerHTML = `<div class="chart-title">Dataset Summary</div><p style="color:#444;font-size:0.9rem;line-height:1.5;">${summaryText}</p>`;
+                chartsArea.appendChild(summaryDiv);
+            }
+
+            if (kpis.length > 0) {
+                const kpiDiv = document.createElement('div');
+                kpiDiv.className = 'chart-wrapper';
+                const kpiRows = kpis.map(k => {
+                    return `<tr>
+                        <td style="padding:0.5rem;border-bottom:1px solid #eee;">${k.name ?? ''}</td>
+                        <td style="padding:0.5rem;border-bottom:1px solid #eee;">${(k.total ?? '').toString()}</td>
+                        <td style="padding:0.5rem;border-bottom:1px solid #eee;">${(k.average ?? '').toString()}</td>
+                        <td style="padding:0.5rem;border-bottom:1px solid #eee;">${(k.min ?? '').toString()}</td>
+                        <td style="padding:0.5rem;border-bottom:1px solid #eee;">${(k.max ?? '').toString()}</td>
+                    </tr>`;
+                }).join('');
+
+                kpiDiv.innerHTML = `
+                    <div class="chart-title">KPI Cards</div>
+                    <table style="width:100%;font-size:0.875rem;border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:#f5f5f5;">
+                                <th style="padding:0.5rem;text-align:left;border-bottom:2px solid #ddd;">KPI</th>
+                                <th style="padding:0.5rem;text-align:left;border-bottom:2px solid #ddd;">Total</th>
+                                <th style="padding:0.5rem;text-align:left;border-bottom:2px solid #ddd;">Average</th>
+                                <th style="padding:0.5rem;text-align:left;border-bottom:2px solid #ddd;">Min</th>
+                                <th style="padding:0.5rem;text-align:left;border-bottom:2px solid #ddd;">Max</th>
+                            </tr>
+                        </thead>
+                        <tbody>${kpiRows}</tbody>
+                    </table>
+                `;
+                chartsArea.appendChild(kpiDiv);
+            }
+
+            charts.forEach((chart, index) => {
+                const chartDiv = document.createElement('div');
+                chartDiv.className = 'chart-wrapper';
+                chartDiv.innerHTML = `<div class="chart-title">${chart.title || chart.kpi || 'Chart'}</div>`;
+                chartsArea.appendChild(chartDiv);
+
+                if (chart.spec && chart.spec.data && chart.spec.layout) {
+                    const plotDiv = document.createElement('div');
+                    plotDiv.id = `upload-chart-${index}`;
+                    plotDiv.className = 'chart-div';
+                    chartDiv.appendChild(plotDiv);
+                    Plotly.newPlot(plotDiv.id, chart.spec.data, chart.spec.layout, { responsive: true });
+                    return;
+                }
+
+                if (chart.type === 'bar' || chart.type === 'line') {
+                    const xVals = chart.x || [];
+                    const yVals = chart.y || [];
+                    if (xVals.length > 0 && yVals.length > 0) {
+                        const plotDiv = document.createElement('div');
+                        plotDiv.id = `upload-chart-${index}`;
+                        plotDiv.className = 'chart-div';
+                        chartDiv.appendChild(plotDiv);
+                        Plotly.newPlot(
+                            plotDiv.id,
+                            [{ type: chart.type, x: xVals, y: yVals }],
+                            { title: chart.title || '', margin: { t: 50, r: 20, b: 60, l: 60 } },
+                            { responsive: true }
+                        );
+                        return;
+                    }
+                }
+
+                if (chart.type === 'histogram') {
+                    const vals = chart.values || [];
+                    if (vals.length > 0) {
+                        const plotDiv = document.createElement('div');
+                        plotDiv.id = `upload-chart-${index}`;
+                        plotDiv.className = 'chart-div';
+                        chartDiv.appendChild(plotDiv);
+                        Plotly.newPlot(
+                            plotDiv.id,
+                            [{ type: 'histogram', x: vals }],
+                            { title: chart.title || '', margin: { t: 50, r: 20, b: 60, l: 60 } },
+                            { responsive: true }
+                        );
+                        return;
+                    }
+                }
+
+                chartDiv.innerHTML += '<p style="color:#777;font-size:0.875rem;">Chart data unavailable.</p>';
+            });
+
+            if (insights.length > 0) {
+                insights.slice(0, 5).forEach(text => {
+                    const card = document.createElement('div');
+                    card.className = 'insight-card';
+                    card.innerHTML = `
+                        <div class="insight-type">INSIGHT</div>
+                        <div class="insight-text">${String(text)}</div>
+                    `;
+                    insightsArea.appendChild(card);
+                });
+            } else {
+                insightsArea.innerHTML = '<p style="color: #999;">No auto insights generated.</p>';
+            }
+
+            if (suggestions.length > 0) {
+                const suggestionCard = document.createElement('div');
+                suggestionCard.className = 'insight-card';
+                suggestionCard.innerHTML = `
+                    <div class="insight-type">SUGGESTIONS</div>
+                    <div class="insight-text">${suggestions.join('<br>')}</div>
+                `;
+                insightsArea.appendChild(suggestionCard);
+            }
+
+            traceArea.innerHTML = `<div class="trace-block">${JSON.stringify({
+                mode: uploadData?.mode || 'both',
+                dashboard_kpis: kpis.length,
+                dashboard_charts: charts.length,
+                insights: insights.length,
+                suggestions: suggestions.length
+            }, null, 2)}</div>`;
+        }
+
+        // Update Status
+        function updateStatus(text, processing) {
+            statusText.textContent = text;
+            if (processing) {
+                statusDot.classList.add('processing');
+            } else {
+                statusDot.classList.remove('processing');
+            }
+        }
+    </script>
+</body>
+</html>

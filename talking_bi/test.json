@@ -1,0 +1,103 @@
+{
+  "status": "INCOMPLETE",
+  "query": "show performance score over time",
+  "session_id": "9da303e2-17f9-4ba3-ad39-ab4fdfc48648",
+  "intent": {
+    "intent": "SEGMENT_BY",
+    "kpi": null,
+    "kpi_1": null,
+    "kpi_2": null,
+    "dimension": "joining_date",
+    "filter": null,
+    "_locked": true,
+    "_lock_source": "trend"
+  },
+  "semantic_meta": {},
+  "data": [],
+  "charts": [],
+  "insights": [],
+  "candidates": [],
+  "plan": {},
+  "latency_ms": 5326.025724411011,
+  "warnings": [
+    "Missing KPI - please specify what metric to analyze"
+  ],
+  "errors": [],
+  "trace": {
+    "preprocessed_query": "show performance score over time",
+    "preprocessor_applied": false,
+    "deterministic_override": false,
+    "filter_interpretation": "",
+    "trend_locked": true,
+    "normalized_query": "show performance score over time",
+    "normalization_applied": false,
+    "normalization_changes": [
+      "normalized_column_performance_score"
+    ],
+    "6g_applied": false,
+    "6g_reason": "",
+    "parser_used": "llm",
+    "raw_intent": {
+      "intent": "SEGMENT_BY",
+      "kpi": null,
+      "kpi_1": null,
+      "kpi_2": null,
+      "dimension": "joining_date",
+      "filter": null,
+      "_locked": true,
+      "_lock_source": "trend"
+    },
+    "semantic_applied": false,
+    "semantic_mapping": null,
+    "semantic_confidence": 0.0,
+    "mapped_fields": {},
+    "context_used": false,
+    "context_kpi_inherited": null,
+    "execution_path": [],
+    "backend_used": "pandas",
+    "cache_hit": false,
+    "llm_cache_hit": false,
+    "fallback_triggered": false,
+    "kpi_validation": {
+      "input": null,
+      "matched_column": null,
+      "columns_available": [
+        "employee_id",
+        "department",
+        "salary",
+        "performance_score",
+        "attrition_flag",
+        "joining_date",
+        "location",
+        "manager_id"
+      ]
+    },
+    "cache_used": false,
+    "cache_reason": "",
+    "context_applied": false,
+    "kpi_resolution": {
+      "input": null,
+      "resolved_to": null,
+      "columns": [
+        "employee_id",
+        "department",
+        "salary",
+        "performance_score",
+        "attrition_flag",
+        "joining_date",
+        "location",
+        "manager_id"
+      ]
+    },
+    "trend_detected": true,
+    "trend_dimension": "joining_date",
+    "context_valid": true,
+    "failure_reason": {},
+    "confidence": {
+      "kpi": 0.0,
+      "semantic": 0.0,
+      "context": 0.0,
+      "overall": 0.0
+    }
+  }
+}
