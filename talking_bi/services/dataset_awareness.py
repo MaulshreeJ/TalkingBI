@@ -210,6 +210,18 @@ def answer_dataset_question(
         == 1.0
     ]
 
+    # ── Protection Layer: Data Logic Filter ─────────────────────
+    # If the query looks like a data analysis request (agg, filter, vs),
+    # force it to the Orchestrator for chart generation.
+    data_logic_triggers = [" by ", " vs ", " over time", " vs ", " where ", " filter ", " compared to "]
+    if any(trigger in q for trigger in data_logic_triggers):
+        return None
+
+    # KPI Awareness: If query explicitly mentions a metric, skip metadata summary
+    for kpi in kpi_cols:
+        if kpi in q:
+            return None
+
     # Dataset overview
     if any(p in q for p in ["what is in this dataset", "dataset summary", "about this data"]):
         return generate_human_summary(summary)
