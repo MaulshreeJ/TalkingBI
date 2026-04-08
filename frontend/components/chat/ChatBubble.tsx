@@ -106,9 +106,9 @@ export function ChatBubble({ message, onQueryClick }: Props) {
         </div>
 
         {/* KPIs */}
-        {r.kpis?.length > 0 && (
+        {r.kpis && r.kpis.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-            {r.kpis.map((kpi, i) => (
+            {r.kpis.map((kpi: any, i: number) => (
               <KpiCard key={i} kpi={kpi} index={i} />
             ))}
           </div>
