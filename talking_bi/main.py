@@ -32,25 +32,25 @@ async def lifespan(app: FastAPI):
 
 from fastapi.middleware.cors import CORSMiddleware
 
+import os
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(
     title="Talking BI — Phase 10",
     description="Product Layer: CSV upload, AI Dataset Profiler, Chat Interface, LLM Pipeline, Analytics & Trace Visibility",
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# Define which frontends can talk to this backend
+# We read from ALLOWED_ORIGINS env var, or fallback to localhost for dev
+origins_raw = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+origins = [o.strip() for o in origins_raw.split(",") if o.strip()]
+
 # Add CORS middleware for frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# CORS Middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # For development, allow all. Change to specific frontend origin in production.
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

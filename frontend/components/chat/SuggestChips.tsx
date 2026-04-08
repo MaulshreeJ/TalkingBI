@@ -3,21 +3,29 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { api } from '@/lib/api';
 
+import type { SuggestionsPayload } from '@/lib/types';
+
 interface Props {
   sessionId: string;
-  initialSuggestions: string[];
+  initialSuggestions: SuggestionsPayload | string[];
   prefix: string;
   onSelect: (q: string) => void;
 }
 
+const getItems = (s: SuggestionsPayload | string[] | undefined): string[] => {
+  if (!s) return [];
+  if (Array.isArray(s)) return s;
+  return s.items || [];
+};
+
 export function SuggestChips({ sessionId, initialSuggestions, prefix, onSelect }: Props) {
-  const [suggestions, setSuggestions] = useState<string[]>(initialSuggestions?.slice(0, 8) || []);
+  const [suggestions, setSuggestions] = useState<string[]>(getItems(initialSuggestions).slice(0, 8));
   const debounceRef = useRef<NodeJS.Timeout>();
 
   const fetchSuggestions = useCallback(async (q: string) => {
     try {
       const result = await api.suggest(sessionId, q);
-      setSuggestions(result.suggestions.slice(0, 8));
+      setSuggestions(getItems(result.suggestions).slice(0, 8));
     } catch {
       // silently fail
     }
@@ -26,7 +34,7 @@ export function SuggestChips({ sessionId, initialSuggestions, prefix, onSelect }
   useEffect(() => {
     clearTimeout(debounceRef.current);
     if (!prefix.trim()) {
-      setSuggestions(initialSuggestions?.slice(0, 8) || []);
+      setSuggestions(getItems(initialSuggestions).slice(0, 8));
       return;
     }
     debounceRef.current = setTimeout(() => fetchSuggestions(prefix), 200);

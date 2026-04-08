@@ -57,6 +57,11 @@ export interface ProfileEntry {
   role_scores: { is_kpi: number; is_dimension: number; is_date: number };
 }
 
+export interface SuggestionsPayload {
+  type: string;
+  items: string[];
+}
+
 export interface UploadResponse {
   dataset_id: string;
   columns: Record<string, ColumnMeta>;
@@ -66,7 +71,7 @@ export interface UploadResponse {
   dataset_summary: Record<string, unknown>;
   dataset_summary_text: string;
   dashboard: Dashboard;
-  suggestions: string[];
+  suggestions: SuggestionsPayload;
 }
 
 export type QueryStatus = 'RESOLVED' | 'INCOMPLETE' | 'UNKNOWN' | 'AMBIGUOUS' | 'ERROR';
@@ -101,7 +106,7 @@ export interface QueryResponse {
 export interface SuggestResponse {
   session_id: string;
   prefix: string;
-  suggestions: string[];
+  suggestions: SuggestionsPayload;
 }
 
 export interface SessionStatus {
@@ -147,7 +152,7 @@ export interface SessionState {
   mode: string;
   profile: Record<string, ProfileEntry>;
   dashboard: Dashboard;
-  suggestions: string[];
+  suggestions: SuggestionsPayload | string[];
   datasetSummaryText: string;
   columns: Record<string, ColumnMeta>;
 }
