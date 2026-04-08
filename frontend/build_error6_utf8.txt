@@ -1,0 +1,53 @@
+﻿
+> frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (:  
+  String) [], RemoteExc   
+ eption
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+[1m[33mwarn[39m[22m - 
+No utility classes were 
+detected in your source 
+files. If this is 
+unexpected, double-check 
+the `content` option in 
+your Tailwind CSS 
+configuration.
+[1m[33mwarn[39m[22m - 
+https://tailwindcss.com/do
+cs/content-configuration
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./components/dashboard/Cha
+rtCard.tsx
+38:7  Error: 'data' is 
+never reassigned. Use 
+'const' instead.  
+prefer-const
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.
+org/docs/basic-features/es
+lint#disabling-rules

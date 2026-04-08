@@ -95,7 +95,7 @@ export interface QueryResponse {
   warnings: string[];
   errors: string[];
   trace: Record<string, unknown>;
-  kpis?: any[];
+  kpis?: KpiSpec[];
 }
 
 export interface SuggestResponse {

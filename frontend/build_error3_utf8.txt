@@ -1,0 +1,140 @@
+﻿
+> frontend@0.1.0 build
+> tsc && vite build
+
+node.exe : [33mThe 
+CJS build of Vite's 
+Node API is 
+deprecated. See https:
+//vite.dev/guide/troub
+leshooting.html#vite-c
+js-node-api-deprecated
+ for more 
+details.[39m
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([33mThe C   
+ JS bu...e details    
+.[39m:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+(node:40064) [MODULE_T
+YPELESS_PACKAGE_JSON] 
+Warning: Module type 
+of file:///C:/Users/ja
+tra/OneDrive/Desktop/T
+alkingBI/frontend/post
+css.config.js is not 
+specified and it 
+doesn't parse as 
+CommonJS.
+Reparsing as ES 
+module because module 
+syntax was detected. 
+This incurs a 
+performance overhead.
+To eliminate this 
+warning, add "type": 
+"module" to C:\Users\j
+atra\OneDrive\Desktop\
+TalkingBI\frontend\pac
+kage.json.
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+node:internal/process/
+promises:394
+    triggerUncaughtExc
+eption(err, true /* 
+fromPromise */);
+    ^
+
+[Failed to load 
+PostCSS config: 
+Failed to load 
+PostCSS config 
+(searchPath: C:/Users/
+jatra/OneDrive/Desktop
+/TalkingBI/frontend): 
+[Error] Loading 
+PostCSS Plugin 
+failed: Cannot find 
+module 
+'@tailwindcss/postcss'
+Require stack:
+- C:\Users\jatra\OneDr
+ive\Desktop\TalkingBI\
+frontend\postcss.confi
+g.js
+
+(@C:\Users\jatra\OneDr
+ive\Desktop\TalkingBI\
+frontend\postcss.confi
+g.js)
+Error: Loading 
+PostCSS Plugin 
+failed: Cannot find 
+module 
+'@tailwindcss/postcss'
+Require stack:
+- C:\Users\jatra\OneDr
+ive\Desktop\TalkingBI\
+frontend\postcss.confi
+g.js
+
+(@C:\Users\jatra\OneDr
+ive\Desktop\TalkingBI\
+frontend\postcss.confi
+g.js)
+    at load (file:///C
+:/Users/jatra/OneDrive
+/Desktop/TalkingBI/fro
+ntend/node_modules/vit
+e/dist/node/chunks/dep
+-BK3b2jBa.js:33632:11)
+    at file:///C:/User
+s/jatra/OneDrive/Deskt
+op/TalkingBI/frontend/
+node_modules/vite/dist
+/node/chunks/dep-BK3b2
+jBa.js:33657:16
+    at Array.map 
+(<anonymous>)
+    at plugins (file:/
+//C:/Users/jatra/OneDr
+ive/Desktop/TalkingBI/
+frontend/node_modules/
+vite/dist/node/chunks/
+dep-BK3b2jBa.js:33656:
+8)
+    at processResult (
+file:///C:/Users/jatra
+/OneDrive/Desktop/Talk
+ingBI/frontend/node_mo
+dules/vite/dist/node/c
+hunks/dep-BK3b2jBa.js:
+33726:14)
+    at file:///C:/User
+s/jatra/OneDrive/Deskt
+op/TalkingBI/frontend/
+node_modules/vite/dist
+/node/chunks/dep-BK3b2
+jBa.js:33856:14]
+
+Node.js v22.18.0

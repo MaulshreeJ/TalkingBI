@@ -35,7 +35,7 @@ export function ChartCard({ chart, index }: Props) {
   const displayKpiKey = chart.kpi || 'value';
   const renderKpiKey = chart.data ? 'value' : displayKpiKey;
   
-  let data = chart.data ? chart.data.slice(0, 20) : [];
+  const data = chart.data ? chart.data.slice(0, 20) : [];
   if (data.length === 0 && chart.x && chart.y) {
     const length = Math.min(chart.x.length, chart.y.length, 20);
     for (let i = 0; i < length; i++) {

@@ -1,0 +1,61 @@
+﻿
+> frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (:String) [   
+ ], RemoteExceptio    
+n
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+Failed to compile.
+
+./components/chat/Chat
+Bubble.tsx
+111:31  Error: 
+Unexpected any. 
+Specify a different 
+type.  @typescript-esl
+int/no-explicit-any
+
+./components/dashboard
+/ChartCard.tsx
+38:7  Error: 'data' 
+is never reassigned. 
+Use 'const' instead.  
+prefer-const
+
+./lib/types.ts
+98:10  Error: 
+Unexpected any. 
+Specify a different 
+type.  @typescript-esl
+int/no-explicit-any
+
+info  - Need to 
+disable some ESLint 
+rules? Learn more 
+here: https://nextjs.o
+rg/docs/basic-features
+/eslint#disabling-rule
+s

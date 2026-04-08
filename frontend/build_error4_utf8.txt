@@ -1,0 +1,353 @@
+﻿
+> frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+node.exe : Warning: 
+Your PostCSS 
+configuration defines 
+a field which is not 
+supported 
+(`__esModule`). 
+Please remove this 
+configuration value.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (Warning: Y   
+ our P...guration     
+value.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+Failed to compile.
+
+./app/globals.css.webp
+ack[javascript/auto]!=
+!./node_modules/next/d
+ist/build/webpack/load
+ers/css-loader/src/ind
+ex.js??ruleSet[1].rule
+s[14].oneOf[12].use[2]
+!./node_modules/next/d
+ist/build/webpack/load
+ers/postcss-loader/src
+/index.js??ruleSet[1].
+rules[14].oneOf[12].us
+e[3]!./app/globals.css
+Error: Your custom 
+PostCSS configuration 
+must export a 
+`plugins` key.
+    at 
+getPostCssPlugins (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\build\webpack\con
+fig\blocks\css\plugins
+.js:106:15)
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\config\bl
+ocks\css\index.js:124:
+36
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\loaders\p
+ostcss-loader\src\inde
+x.js:51:40
+    at async 
+Span.traceAsyncFn (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\trace\trace.js:15
+4:20)
+
+Import trace for 
+requested module:
+./app/globals.css.webp
+ack[javascript/auto]!=
+!./node_modules/next/d
+ist/build/webpack/load
+ers/css-loader/src/ind
+ex.js??ruleSet[1].rule
+s[14].oneOf[12].use[2]
+!./node_modules/next/d
+ist/build/webpack/load
+ers/postcss-loader/src
+/index.js??ruleSet[1].
+rules[14].oneOf[12].us
+e[3]!./app/globals.css
+./app/globals.css
+
+./app/globals.css
+Error: Your custom 
+PostCSS configuration 
+must export a 
+`plugins` key.
+    at 
+getPostCssPlugins (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\build\webpack\con
+fig\blocks\css\plugins
+.js:106:15)
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\config\bl
+ocks\css\index.js:124:
+36
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\loaders\p
+ostcss-loader\src\inde
+x.js:51:40
+    at async 
+Span.traceAsyncFn (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\trace\trace.js:15
+4:20)
+    at 
+tryRunOrWebpackError (
+C:\Users\jatra\OneDriv
+e\Desktop\TalkingBI\fr
+ontend\node_modules\ne
+xt\dist\compiled\webpa
+ck\bundle5.js:28:31298
+9)
+    at __webpack_requi
+re_module__ (C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\c
+ompiled\webpack\bundle
+5.js:28:131165)
+    at __nested_webpac
+k_require_153728__ (C:
+\Users\jatra\OneDrive\
+Desktop\TalkingBI\fron
+tend\node_modules\next
+\dist\compiled\webpack
+\bundle5.js:28:130607)
+    at C:\Users\jatra\
+OneDrive\Desktop\Talki
+ngBI\frontend\node_mod
+ules\next\dist\compile
+d\webpack\bundle5.js:2
+8:131454
+    at symbolIterator 
+(C:\Users\jatra\OneDri
+ve\Desktop\TalkingBI\f
+rontend\node_modules\n
+ext\dist\compiled\neo-
+async\async.js:1:14444
+)
+    at done (C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\c
+ompiled\neo-async\asyn
+c.js:1:14824)
+    at Hook.eval [as 
+callAsync] (eval at 
+create (C:\Users\jatra
+\OneDrive\Desktop\Talk
+ingBI\frontend\node_mo
+dules\next\dist\compil
+ed\webpack\bundle5.js:
+13:28858), 
+<anonymous>:15:1)
+    at Hook.CALL_ASYNC
+_DELEGATE [as 
+_callAsync] (C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\c
+ompiled\webpack\bundle
+5.js:13:26012)
+    at C:\Users\jatra\
+OneDrive\Desktop\Talki
+ngBI\frontend\node_mod
+ules\next\dist\compile
+d\webpack\bundle5.js:2
+8:130328
+    at symbolIterator 
+(C:\Users\jatra\OneDri
+ve\Desktop\TalkingBI\f
+rontend\node_modules\n
+ext\dist\compiled\neo-
+async\async.js:1:14402
+)
+-- inner error --
+Error: Your custom 
+PostCSS configuration 
+must export a 
+`plugins` key.
+    at 
+getPostCssPlugins (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\build\webpack\con
+fig\blocks\css\plugins
+.js:106:15)
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\config\bl
+ocks\css\index.js:124:
+36
+    at async C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\b
+uild\webpack\loaders\p
+ostcss-loader\src\inde
+x.js:51:40
+    at async 
+Span.traceAsyncFn (C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\trace\trace.js:15
+4:20)
+    at 
+Object.<anonymous> (C:
+\Users\jatra\OneDrive\
+Desktop\TalkingBI\fron
+tend\node_modules\next
+\dist\build\webpack\lo
+aders\css-loader\src\i
+ndex.js??ruleSet[1].ru
+les[14].oneOf[12].use[
+2]!C:\Users\jatra\OneD
+rive\Desktop\TalkingBI
+\frontend\node_modules
+\next\dist\build\webpa
+ck\loaders\postcss-loa
+der\src\index.js??rule
+Set[1].rules[14].oneOf
+[12].use[3]!C:\Users\j
+atra\OneDrive\Desktop\
+TalkingBI\frontend\app
+\globals.css:1:7)
+    at C:\Users\jatra\
+OneDrive\Desktop\Talki
+ngBI\frontend\node_mod
+ules\next\dist\compile
+d\webpack\bundle5.js:2
+8:922493
+    at Hook.eval [as 
+call] (eval at create 
+(C:\Users\jatra\OneDri
+ve\Desktop\TalkingBI\f
+rontend\node_modules\n
+ext\dist\compiled\webp
+ack\bundle5.js:13:2863
+6), <anonymous>:7:1)
+    at 
+Hook.CALL_DELEGATE 
+[as _call] (C:\Users\j
+atra\OneDrive\Desktop\
+TalkingBI\frontend\nod
+e_modules\next\dist\co
+mpiled\webpack\bundle5
+.js:13:25906)
+    at C:\Users\jatra\
+OneDrive\Desktop\Talki
+ngBI\frontend\node_mod
+ules\next\dist\compile
+d\webpack\bundle5.js:2
+8:131198
+    at 
+tryRunOrWebpackError (
+C:\Users\jatra\OneDriv
+e\Desktop\TalkingBI\fr
+ontend\node_modules\ne
+xt\dist\compiled\webpa
+ck\bundle5.js:28:31294
+3)
+    at __webpack_requi
+re_module__ (C:\Users\
+jatra\OneDrive\Desktop
+\TalkingBI\frontend\no
+de_modules\next\dist\c
+ompiled\webpack\bundle
+5.js:28:131165)
+    at __nested_webpac
+k_require_153728__ (C:
+\Users\jatra\OneDrive\
+Desktop\TalkingBI\fron
+tend\node_modules\next
+\dist\compiled\webpack
+\bundle5.js:28:130607)
+    at C:\Users\jatra\
+OneDrive\Desktop\Talki
+ngBI\frontend\node_mod
+ules\next\dist\compile
+d\webpack\bundle5.js:2
+8:131454
+    at symbolIterator 
+(C:\Users\jatra\OneDri
+ve\Desktop\TalkingBI\f
+rontend\node_modules\n
+ext\dist\compiled\neo-
+async\async.js:1:14444
+)
+
+Generated code for C:\
+Users\jatra\OneDrive\D
+esktop\TalkingBI\front
+end\node_modules\next\
+dist\build\webpack\loa
+ders\css-loader\src\in
+dex.js??ruleSet[1].rul
+es[14].oneOf[12].use[2
+]!C:\Users\jatra\OneDr
+ive\Desktop\TalkingBI\
+frontend\node_modules\
+next\dist\build\webpac
+k\loaders\postcss-load
+er\src\index.js??ruleS
+et[1].rules[14].oneOf[
+12].use[3]!C:\Users\ja
+tra\OneDrive\Desktop\T
+alkingBI\frontend\app\
+globals.css
+
+Import trace for 
+requested module:
+./app/globals.css
+
+
+> Build failed 
+because of webpack 
+errors

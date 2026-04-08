@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap, Brain, Clock } from 'lucide-react';
-import type { ChatMessage } from '@/lib/types';
+import type { ChatMessage, KpiSpec } from '@/lib/types';
 import { statusColor, formatLatency, cn } from '@/lib/utils';
 import { InsightPanel } from '@/components/dashboard/InsightPanel';
 import { ChartCard } from '@/components/dashboard/ChartCard';
@@ -108,7 +108,7 @@ export function ChatBubble({ message, onQueryClick }: Props) {
         {/* KPIs */}
         {r.kpis && r.kpis.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-            {r.kpis.map((kpi: any, i: number) => (
+            {r.kpis.map((kpi: KpiSpec, i: number) => (
               <KpiCard key={i} kpi={kpi} index={i} />
             ))}
           </div>
